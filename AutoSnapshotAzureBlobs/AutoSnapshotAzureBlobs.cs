@@ -14,7 +14,7 @@ namespace AutoSnapshotAzureBlobs
 {
     public static class AutoSnapshotAzureBlobs
     {
-        private static readonly string BLOB_STORAGE_CONNECTION_STRING = Environment.GetEnvironmentVariable("MonitoredStorageAccount");
+        private static readonly string MONITORED_STORAGE_ACCOUNT_CONNECTION_STRING = System.Environment.GetEnvironmentVariable("MonitoredStorageAccount");
  
         private static string GetBlobNameFromUrl(string bloblUrl)
         {
@@ -36,9 +36,8 @@ namespace AutoSnapshotAzureBlobs
         {
             try
             {
-                log.LogInformation(BLOB_STORAGE_CONNECTION_STRING);
                 var createdEvent = ((JObject)eventGridEvent.Data).ToObject<StorageBlobCreatedEventData>();
-                var storageAccount = CloudStorageAccount.Parse(BLOB_STORAGE_CONNECTION_STRING);
+                var storageAccount = CloudStorageAccount.Parse(MONITORED_STORAGE_ACCOUNT_CONNECTION_STRING);
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 var container = blobClient.GetContainerReference(GetBlobContainerFromUrl(createdEvent.Url));
                 var blobName = GetBlobNameFromUrl(createdEvent.Url);
