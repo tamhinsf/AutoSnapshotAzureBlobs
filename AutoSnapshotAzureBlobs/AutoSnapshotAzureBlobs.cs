@@ -36,6 +36,7 @@ namespace AutoSnapshotAzureBlobs
         {
             try
             {
+                log.LogInformation(BLOB_STORAGE_CONNECTION_STRING);
                 var createdEvent = ((JObject)eventGridEvent.Data).ToObject<StorageBlobCreatedEventData>();
                 var storageAccount = CloudStorageAccount.Parse(BLOB_STORAGE_CONNECTION_STRING);
                 var blobClient = storageAccount.CreateCloudBlobClient();
