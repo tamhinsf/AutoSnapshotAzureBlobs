@@ -14,7 +14,7 @@ namespace AutoSnapshotAzureBlobs
 {
     public static class AutoSnapshotAzureBlobs
     {
-        private static readonly string MONITORED_STORAGE_ACCOUNT_CONNECTION_STRING = System.Environment.GetEnvironmentVariable("MonitoredStorageAccount");
+        private static readonly string AUTOSNAPSHOTAZUREBLOBS_MONITORED_STORAGE_ACCOUNT_CONNECTION_STRING = System.Environment.GetEnvironmentVariable("AutoSnapshotAzureBlobsMonitoredStorageAccount");
  
         private static string GetBlobNameFromUrl(string bloblUrl)
         {
