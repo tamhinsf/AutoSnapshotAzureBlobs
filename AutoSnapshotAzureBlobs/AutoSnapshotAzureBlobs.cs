@@ -37,7 +37,7 @@ namespace AutoSnapshotAzureBlobs
             try
             {
                 var createdEvent = ((JObject)eventGridEvent.Data).ToObject<StorageBlobCreatedEventData>();
-                var storageAccount = CloudStorageAccount.Parse(MONITORED_STORAGE_ACCOUNT_CONNECTION_STRING);
+                var storageAccount = CloudStorageAccount.Parse(AUTOSNAPSHOTAZUREBLOBS_MONITORED_STORAGE_ACCOUNT_CONNECTION_STRING);
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 var container = blobClient.GetContainerReference(GetBlobContainerFromUrl(createdEvent.Url));
                 var blobName = GetBlobNameFromUrl(createdEvent.Url);
