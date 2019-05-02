@@ -37,7 +37,12 @@ namespace AutoSnapshotAzureBlobs
             try
             {
                 var createdEvent = ((JObject)eventGridEvent.Data).ToObject<StorageBlobCreatedEventData>();
-                log.LogInformation(createdEvent.BlobType + " " + eventGridEvent.EventType + " " + eventGridEvent.EventType);
+                if(eventGridEvent.EventType != "Microsoft.Storage.BlobCreated")
+                {
+                    log.LogInformation($"No snapshot created.  Not a Create Block Blob Event.  You may want to add filters to your Event Grid subscription to reduce the number of Functions executions.");
+                    log.LogInformation($"Event Type: {eventGridEvent.EventType}.  Blob Type: {createdEvent.BlobType}");
+                    return;
+                }
                 var storageAccount = CloudStorageAccount.Parse(AUTOSNAPSHOTAZUREBLOBS_CONNECTION_STRING);
                 var blobClient = storageAccount.CreateCloudBlobClient();
                 var container = blobClient.GetContainerReference(GetBlobContainerFromUrl(createdEvent.Url));
